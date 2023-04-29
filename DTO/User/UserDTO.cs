@@ -10,9 +10,11 @@ namespace server.DTO.User
 
         public string? UserImg {get;set;}= string.Empty;
 
-        public string? FistName {get;set;}= string.Empty;
+        public string? FirstName {get;set;}= string.Empty;
 
         public string? LastName{get;set;}= string.Empty;
+
+        public string? Tel {get;set;}=string.Empty;
 
         public int Score {get;set;}
 

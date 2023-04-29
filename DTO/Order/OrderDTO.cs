@@ -8,6 +8,10 @@ namespace server.DTO.Order
 
         public string? Username {get;set;}= string.Empty;
 
+        public string? UserTel {get;set;}= string.Empty;
+
+        public string? ReceiverTel {get;set;}= string.Empty;
+
         public string? ReceiverId {get;set;}= string.Empty;
 
         public string? ReceiverUsername {get;set;}= string.Empty;

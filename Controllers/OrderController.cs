@@ -30,6 +30,8 @@ namespace server.Controllers
                     OrderId = e.OrderId,
                     UserId = e.UserId,
                     Username = e.Username,
+                    UserTel = e.UserTel,
+                    ReceiverTel = e.ReceiverTel,
                     ReceiverId = e.ReceiverId,
                     ReceiverUsername = e.ReceiverUsername,
                     PiorityScore = e.PiorityScore,
@@ -103,6 +105,7 @@ namespace server.Controllers
             var claims = decodedToken.Claims;
             string OwnUserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
             string OwnUsername = claims.FirstOrDefault(c => c.Type == "Username")?.Value;
+            string OwnTel = claims.FirstOrDefault(c => c.Type == "Tel")?.Value;
             int OwnScore = int.Parse(claims.FirstOrDefault(c => c.Type == "Score")?.Value);
             Guid myuuid = Guid.NewGuid();
             string myuuidAsString = myuuid.ToString();
@@ -115,6 +118,7 @@ namespace server.Controllers
                         OrderId = myuuidAsString,
                         UserId = OwnUserId,
                         Username = OwnUsername,
+                        UserTel = OwnTel,
                         PiorityScore = OwnScore,
                         Restaurant = AddOrder.Restaurant,
                         Detail = AddOrder.Detail,
@@ -152,6 +156,7 @@ namespace server.Controllers
             try{
                 var foundOrder = await WebAppDbContext.Orders.FindAsync(OrderId);
                 if(foundOrder!=null){
+                    foundOrder.ReceiverTel = takeOrder.ReceiverTel;
                     foundOrder.ReceiverId = takeOrder.ReceiverId;
                     foundOrder.ReceiverUsername = takeOrder.ReceiverUsername;
                     foundOrder.IsTaken = true;

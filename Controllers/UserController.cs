@@ -4,9 +4,7 @@ using System.Net;
 using server.DTO.User;
 using server.data;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using System;    
-using System.IO;  
+using Microsoft.AspNetCore.Authorization; 
 
 namespace server.Controllers
 {
@@ -33,8 +31,9 @@ namespace server.Controllers
                     Username = s.Username,
                     Password = s.Password,
                     Score = s.Score,
-                    FistName = s.FistName,
+                    FirstName = s.FistName,
                     LastName = s.LastName,
+                    Tel=s.Tel,
                     Success = s.Success,
                     Failed = s.Failed
                     }
@@ -60,22 +59,26 @@ namespace server.Controllers
                 return HttpStatusCode.NotFound;
             }
             try{
-                    if(foundUser.UserImg!="nullUser.png"){
+                    if(foundUser.UserImg!="nullUser.png" && updateUser.Image.FileName!=""){
                         var oldFilepath = Path.Combine(Directory.GetCurrentDirectory(),"static",foundUser.UserImg);
                         FileInfo oldFile = new FileInfo(oldFilepath);
                         oldFile.Delete();
                     }
-                    var filepath = Path.Combine(Directory.GetCurrentDirectory(),"static",updateUser.Image.FileName);
-                    foundUser.UserImg=  updateUser.Image.FileName.ToString();
                     foundUser.FistName = updateUser.FirstName;
                     foundUser.LastName = updateUser.LastName;
-                    await updateUser.Image.CopyToAsync(new FileStream(filepath, FileMode.Create));
+                    foundUser.Tel = updateUser.Tel;
+                    if(updateUser.Image.FileName!=""){
+                        foundUser.UserImg=  updateUser.Image.FileName.ToString();
+                        var filepath = Path.Combine(Directory.GetCurrentDirectory(),"static",updateUser.Image.FileName);
+                        await updateUser.Image.CopyToAsync(new FileStream(filepath, FileMode.Create));
+                    }
                     await WebAppDbContext.SaveChangesAsync();
                     return HttpStatusCode.OK;
                  }catch(Exception err){
+                    Console.WriteLine(err);
                 return HttpStatusCode.BadRequest;
                 }
-        }
+        }   
 
         [HttpGet("[action]")]
         [Authorize]
@@ -93,8 +96,9 @@ namespace server.Controllers
                 UserId = s.UserId,
                 Username = s.Username,
                 Password = s.Password,
-                FistName = s.FistName,
+                FirstName = s.FistName,
                 LastName=s.LastName,
+                Tel=s.Tel,
                 Score = s.Score,
                 UserImg = s.UserImg,
                 Success = s.Success,
@@ -110,8 +114,9 @@ namespace server.Controllers
                 userInfo.Username = User.Username;
                 userInfo.Score = User.Score;
                 userInfo.UserImg = User.UserImg;
-                userInfo.FirstName = User.FistName;
+                userInfo.FirstName = User.FirstName;
                 userInfo.LastName = User.LastName;
+                userInfo.Tel = User.Tel;
                 userInfo.Success =User.Success;
                 userInfo.Failed = User.Failed;
                 return Ok(userInfo);

@@ -14,6 +14,12 @@ namespace server.model
         [StringLength(45)]
         public string? Username {get;set;}= string.Empty;
 
+        [StringLength(10)]
+        public string? UserTel {get;set;}= string.Empty;
+
+        [StringLength(10)]
+        public string? ReceiverTel {get;set;}= string.Empty;
+
         [StringLength(45)]
         public string? ReceiverId {get;set;}= string.Empty;
 

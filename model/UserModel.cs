@@ -23,6 +23,9 @@ namespace server.model
         [StringLength(45)]
         public string? LastName{get;set;}= string.Empty;
 
+        [StringLength(10)]
+        public string? Tel{get;set;}=string.Empty;
+
         public int Score {get;set;}
 
         public int Success {get;set;}

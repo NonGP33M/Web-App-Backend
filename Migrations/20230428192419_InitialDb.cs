@@ -5,7 +5,7 @@
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class WebAppInitial : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,12 +20,15 @@ namespace server.Migrations
                     OrderId = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false),
                     UserId = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Username = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    UserTel = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
+                    ReceiverTel = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     ReceiverId = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     ReceiverUsername = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     PiorityScore = table.Column<int>(type: "int", nullable: false),
                     Restaurant = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Detail = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     ReceiveLocation = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    IfDoneScore = table.Column<int>(type: "int", nullable: false),
                     IsTaken = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
@@ -44,6 +47,7 @@ namespace server.Migrations
                     UserImg = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     FistName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     LastName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    Tel = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     Score = table.Column<int>(type: "int", nullable: false),
                     Success = table.Column<int>(type: "int", nullable: false),
                     Failed = table.Column<int>(type: "int", nullable: false)

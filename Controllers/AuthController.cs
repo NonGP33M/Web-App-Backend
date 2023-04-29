@@ -44,6 +44,7 @@ namespace server.Controllers
                     UserImg = "nullUser.png",
                     FistName = User.FirstName,
                     LastName = User.LastName,
+                    Tel = User.Tel,
                     Score = 0,
                     Success = 0,
                     Failed = 0
@@ -71,7 +72,8 @@ namespace server.Controllers
                 var claims = new[]{
                     new Claim("UserId", foundUser.UserId.ToString()),
                     new Claim("Username", foundUser.Username.ToString()),
-                    new Claim("Score", foundUser.Score.ToString())
+                    new Claim("Score", foundUser.Score.ToString()),
+                    new Claim("Tel", foundUser.Tel.ToString())
                     };
                 var tokeOptions = new JwtSecurityToken(
                     issuer: Configuration["JWT:Issuer"],
