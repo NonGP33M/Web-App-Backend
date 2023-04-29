@@ -45,7 +45,7 @@ namespace server.Migrations
                     Username = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Password = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     UserImg = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
-                    FistName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    FirstName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     LastName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Tel = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     Score = table.Column<int>(type: "int", nullable: false),

@@ -11,7 +11,7 @@ using server.data;
 namespace server.Migrations
 {
     [DbContext(typeof(WebAppDbContext))]
-    [Migration("20230428192419_InitialDb")]
+    [Migration("20230429165615_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace server.Migrations
                     b.Property<int>("Failed")
                         .HasColumnType("int");
 
-                    b.Property<string>("FistName")
+                    b.Property<string>("FirstName")
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 

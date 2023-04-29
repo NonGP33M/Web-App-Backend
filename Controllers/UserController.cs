@@ -4,7 +4,9 @@ using System.Net;
 using server.DTO.User;
 using server.data;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization; 
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using server.model;
 
 namespace server.Controllers
 {
@@ -14,24 +16,24 @@ namespace server.Controllers
     {
         private readonly WebAppDbContext WebAppDbContext;
         private readonly IConfiguration Configuration;
-
-        public UserController(WebAppDbContext WebAppDbContext, IConfiguration Configuration)
+        private readonly IMapper Mapper;
+        public UserController(WebAppDbContext WebAppDbContext, IConfiguration Configuration,IMapper Mapper)
         {
             this.WebAppDbContext = WebAppDbContext;
             this.Configuration = Configuration;
+            this.Mapper = Mapper;
         }
 
-        [HttpGet("GetUsers")]
-        public async Task<ActionResult<List<UserDTO>>> Get()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<UserInfoDTO>>> GetTopUser()
         {
             var List = await WebAppDbContext.Users.Select(
-                s => new UserDTO
+                s => new UserInfoDTO
                 {
-                    UserId = s.UserId,
                     Username = s.Username,
-                    Password = s.Password,
+                    UserImg=s.UserImg,
                     Score = s.Score,
-                    FirstName = s.FistName,
+                    FirstName = s.FirstName,
                     LastName = s.LastName,
                     Tel=s.Tel,
                     Success = s.Success,
@@ -39,7 +41,7 @@ namespace server.Controllers
                     }
             ).ToListAsync();
 
-            var sorted = List.OrderBy(e => e.Score).ToList();
+            var sorted = List.OrderByDescending(e => e.Score).Take(10).ToList();
 
             if (sorted.Count < 0)
             {
@@ -48,6 +50,60 @@ namespace server.Controllers
             else
             {
                 return sorted;
+            }
+        }
+
+        [HttpGet("[action]/{UserId}")]
+        public async Task<ActionResult<UserInfoAndPlaceDTO>> GetMyPlace(string UserId)
+        {
+            var List = await WebAppDbContext.Users.Select(
+                s => new UserModel
+                {
+                    UserId = s.UserId,
+                    Username = s.Username,
+                    UserImg=s.UserImg,
+                    Score = s.Score,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Tel=s.Tel,
+                    Success = s.Success,
+                    Failed = s.Failed
+                    }
+            ).ToListAsync();
+            
+            var sorted = List.OrderByDescending(e => e.Score).ToList();
+            int place = sorted.FindIndex(e=>e.UserId == UserId);
+
+            UserDTO User = await WebAppDbContext.Users.Select(s => new UserDTO
+            {
+                UserId = s.UserId,
+                Username = s.Username,
+                Password = s.Password,
+                FirstName = s.FirstName,
+                LastName=s.LastName,
+                Tel=s.Tel,
+                Score = s.Score,
+                UserImg = s.UserImg,
+                Success = s.Success,
+                Failed = s.Failed
+            }).FirstOrDefaultAsync(s => s.UserId == UserId);
+            if (User == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var userInfo = new UserInfoAndPlaceDTO();
+                userInfo.Place = place+1;
+                userInfo.Username = User.Username;
+                userInfo.Score = User.Score;
+                userInfo.UserImg = User.UserImg;
+                userInfo.FirstName = User.FirstName;
+                userInfo.LastName = User.LastName;
+                userInfo.Tel = User.Tel;
+                userInfo.Success =User.Success;
+                userInfo.Failed = User.Failed;
+                return Ok(userInfo);
             }
         }
 
@@ -64,7 +120,7 @@ namespace server.Controllers
                         FileInfo oldFile = new FileInfo(oldFilepath);
                         oldFile.Delete();
                     }
-                    foundUser.FistName = updateUser.FirstName;
+                    foundUser.FirstName = updateUser.FirstName;
                     foundUser.LastName = updateUser.LastName;
                     foundUser.Tel = updateUser.Tel;
                     if(updateUser.Image.FileName!=""){
@@ -96,7 +152,7 @@ namespace server.Controllers
                 UserId = s.UserId,
                 Username = s.Username,
                 Password = s.Password,
-                FirstName = s.FistName,
+                FirstName = s.FirstName,
                 LastName=s.LastName,
                 Tel=s.Tel,
                 Score = s.Score,

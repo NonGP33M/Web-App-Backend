@@ -18,7 +18,7 @@ namespace server.model
         public string? UserImg {get;set;}= string.Empty;
 
         [StringLength(45)]
-        public string? FistName {get;set;}= string.Empty;
+        public string? FirstName {get;set;}= string.Empty;
 
         [StringLength(45)]
         public string? LastName{get;set;}= string.Empty;

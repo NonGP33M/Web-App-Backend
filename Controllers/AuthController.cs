@@ -42,7 +42,7 @@ namespace server.Controllers
                     Username = User.Username,
                     Password = passwordHash,
                     UserImg = "nullUser.png",
-                    FistName = User.FirstName,
+                    FirstName = User.FirstName,
                     LastName = User.LastName,
                     Tel = User.Tel,
                     Score = 0,
