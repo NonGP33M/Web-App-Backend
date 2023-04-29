@@ -11,8 +11,8 @@ using server.data;
 namespace server.Migrations
 {
     [DbContext(typeof(WebAppDbContext))]
-    [Migration("20230422192924_WebAppInitial")]
-    partial class WebAppInitial
+    [Migration("20230429113155_web-app-database")]
+    partial class webappdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace server.Migrations
                     b.Property<string>("Detail")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
+
+                    b.Property<int>("IfDoneScore")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsTaken")
                         .HasColumnType("tinyint(1)");
@@ -76,7 +79,7 @@ namespace server.Migrations
                     b.Property<int>("Failed")
                         .HasColumnType("int");
 
-                    b.Property<string>("FistName")
+                    b.Property<string>("FirstName")
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 

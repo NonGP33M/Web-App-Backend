@@ -5,7 +5,7 @@
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class WebAppInitial : Migration
+    public partial class webappdatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,6 +26,7 @@ namespace server.Migrations
                     Restaurant = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Detail = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     ReceiveLocation = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    IfDoneScore = table.Column<int>(type: "int", nullable: false),
                     IsTaken = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
@@ -42,7 +43,7 @@ namespace server.Migrations
                     Username = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Password = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     UserImg = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
-                    FistName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    FirstName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     LastName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     Score = table.Column<int>(type: "int", nullable: false),
                     Success = table.Column<int>(type: "int", nullable: false),

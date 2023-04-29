@@ -76,7 +76,7 @@ namespace server.Migrations
                     b.Property<int>("Failed")
                         .HasColumnType("int");
 
-                    b.Property<string>("FistName")
+                    b.Property<string>("FirstName")
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
