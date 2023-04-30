@@ -11,8 +11,8 @@ using server.data;
 namespace server.Migrations
 {
     [DbContext(typeof(WebAppDbContext))]
-    [Migration("20230429113155_web-app-database")]
-    partial class webappdatabase
+    [Migration("20230430115708_webdatabase")]
+    partial class webdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,10 @@ namespace server.Migrations
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
+                    b.Property<string>("ReceiverTel")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
                     b.Property<string>("ReceiverUsername")
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
@@ -60,6 +64,10 @@ namespace server.Migrations
                     b.Property<string>("UserId")
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
+
+                    b.Property<string>("UserTel")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Username")
                         .HasMaxLength(45)
@@ -96,6 +104,10 @@ namespace server.Migrations
 
                     b.Property<int>("Success")
                         .HasColumnType("int");
+
+                    b.Property<string>("Tel")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("UserImg")
                         .HasMaxLength(500)

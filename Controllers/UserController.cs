@@ -37,21 +37,19 @@ namespace server.Controllers
                     UserImg = s.UserImg,
                     Score = s.Score,
                     FirstName = s.FirstName,
-                    FirstName = s.FirstName,
                     LastName = s.LastName,
                     Tel = s.Tel,
                     Success = s.Success,
                     Failed = s.Failed
                 }
-                }
             ).ToListAsync();
 
-        var sorted = List.OrderByDescending(e => e.Score).Take(10).ToList();
+            var sorted = List.OrderByDescending(e => e.Score).Take(10).ToList();
 
-            if (sorted.Count< 0)
+            if (sorted.Count < 0)
             {
                 return NotFound();
-    }
+            }
             else
             {
                 return sorted;
@@ -59,68 +57,64 @@ namespace server.Controllers
         }
 
         [HttpGet("[action]/{UserId}")]
-public async Task<ActionResult<UserInfoAndPlaceDTO>> GetMyPlace(string UserId)
-{
-    var List = await WebAppDbContext.Users.Select(
-        s => new UserModel
+        public async Task<ActionResult<UserInfoAndPlaceDTO>> GetMyPlace(string UserId)
         {
-            UserId = s.UserId,
-            Username = s.Username,
-            UserImg = s.UserImg,
-            Score = s.Score,
-            FirstName = s.FirstName,
-            LastName = s.LastName,
-            Tel = s.Tel,
-            Success = s.Success,
-            Failed = s.Failed
+            var List = await WebAppDbContext.Users.Select(
+                s => new UserModel
+                {
+                    UserId = s.UserId,
+                    Username = s.Username,
+                    UserImg = s.UserImg,
+                    Score = s.Score,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Tel = s.Tel,
+                    Success = s.Success,
+                    Failed = s.Failed
+                }
+            ).ToListAsync();
+
+            var sorted = List.OrderByDescending(e => e.Score).ToList();
+            int place = sorted.FindIndex(e => e.UserId == UserId);
+
+            UserDTO User = await WebAppDbContext.Users.Select(s => new UserDTO
+            {
+                UserId = s.UserId,
+                Username = s.Username,
+                Password = s.Password,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Tel = s.Tel,
+                Score = s.Score,
+                UserImg = s.UserImg,
+                Success = s.Success,
+                Failed = s.Failed
+            }).FirstOrDefaultAsync(s => s.UserId == UserId);
+            if (User == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var userInfo = new UserInfoAndPlaceDTO();
+                userInfo.Place = place + 1;
+                userInfo.Username = User.Username;
+                userInfo.Score = User.Score;
+                userInfo.UserImg = User.UserImg;
+                userInfo.FirstName = User.FirstName;
+                userInfo.LastName = User.LastName;
+                userInfo.Tel = User.Tel;
+                userInfo.Success = User.Success;
+                userInfo.Failed = User.Failed;
+                return Ok(userInfo);
+            }
         }
-    ).ToListAsync();
 
-    var sorted = List.OrderByDescending(e => e.Score).ToList();
-    int place = sorted.FindIndex(e => e.UserId == UserId);
-
-    UserDTO User = await WebAppDbContext.Users.Select(s => new UserDTO
-    {
-        UserId = s.UserId,
-        Username = s.Username,
-        Password = s.Password,
-        FirstName = s.FirstName,
-        LastName = s.LastName,
-        Tel = s.Tel,
-        Score = s.Score,
-        UserImg = s.UserImg,
-        Success = s.Success,
-        Failed = s.Failed
-    }).FirstOrDefaultAsync(s => s.UserId == UserId);
-    if (User == null)
-    {
-        return NotFound();
-    }
-    else
-    {
-        var userInfo = new UserInfoAndPlaceDTO();
-        userInfo.Place = place + 1;
-        userInfo.Username = User.Username;
-        userInfo.Score = User.Score;
-        userInfo.UserImg = User.UserImg;
-        userInfo.FirstName = User.FirstName;
-        userInfo.LastName = User.LastName;
-        userInfo.Tel = User.Tel;
-        userInfo.Success = User.Success;
-        userInfo.Failed = User.Failed;
-        return Ok(userInfo);
-    }
-}
-
-[HttpPatch("[action]/{UserId}")]
-[Authorize]
-public async Task<HttpStatusCode> UpdateUser(string UserId, [FromForm] UpdateUserDTO updateUser)
-{
-    public async Task<HttpStatusCode> UpdateUser(string UserId, [FromForm] UpdateUserDTO updateUser)
-    {
-        var foundUser = await WebAppDbContext.Users.FindAsync(UserId);
-        if (User is null)
+        [HttpPatch("[action]/{UserId}")]
+        [Authorize]
+        public async Task<HttpStatusCode> UpdateUser(string UserId, [FromForm] UpdateUserDTO updateUser)
         {
+            var foundUser = await WebAppDbContext.Users.FindAsync(UserId);
             if (User is null)
             {
                 return HttpStatusCode.NotFound;
@@ -152,19 +146,7 @@ public async Task<HttpStatusCode> UpdateUser(string UserId, [FromForm] UpdateUse
                 return HttpStatusCode.BadRequest;
             }
         }
-    }
 
-    [HttpGet("[action]/{UserId}")]
-    // [Authorize]
-    public async Task<IActionResult> GetUserById(string UserId)
-    {
-        // string authHeader = Request.Headers["Authorization"];
-        // string[] lstAuthHeader = authHeader.Split(" ");
-        // var token = lstAuthHeader[1];
-        // JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        // JwtSecurityToken decodedToken = tokenHandler.ReadJwtToken(token);
-        // var claims = decodedToken.Claims;
-        // string UserId = claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
         [HttpGet("[action]/{UserId}")]
         // [Authorize]
         public async Task<IActionResult> GetUserById(string UserId)
@@ -200,7 +182,6 @@ public async Task<HttpStatusCode> UpdateUser(string UserId, [FromForm] UpdateUse
                 userInfo.Username = User.Username;
                 userInfo.Score = User.Score;
                 userInfo.UserImg = User.UserImg;
-                userInfo.FirstName = User.FirstName;
                 userInfo.FirstName = User.FirstName;
                 userInfo.LastName = User.LastName;
                 userInfo.Tel = User.Tel;

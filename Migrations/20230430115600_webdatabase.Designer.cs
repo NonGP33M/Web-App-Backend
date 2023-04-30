@@ -11,8 +11,8 @@ using server.data;
 namespace server.Migrations
 {
     [DbContext(typeof(WebAppDbContext))]
-    [Migration("20230429172727_newDatabase")]
-    partial class newDatabase
+    [Migration("20230430115600_webdatabase")]
+    partial class webdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
