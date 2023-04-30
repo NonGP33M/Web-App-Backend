@@ -3457,26 +3457,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\iceic\\.nuget\\packages\\": {}
+    "C:\\Users\\Asus\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\iceic\\real_dotnet\\server\\server.csproj",
+      "projectUniqueName": "D:\\Code\\Project\\Web-App-Backend\\server.csproj",
       "projectName": "server",
-      "projectPath": "C:\\Users\\iceic\\real_dotnet\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\iceic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\iceic\\real_dotnet\\server\\obj\\",
+      "projectPath": "D:\\Code\\Project\\Web-App-Backend\\server.csproj",
+      "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
+      "outputPath": "D:\\Code\\Project\\Web-App-Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\iceic\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

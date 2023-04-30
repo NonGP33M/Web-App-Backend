@@ -29,10 +29,12 @@ namespace server.Controllers
         [HttpPost("Register")]
         public async Task<HttpStatusCode> Register(AddUserDTO User)
         {
-            if(User.Password.Length==0 || User.Username.Length==0){
+            if (User.Password.Length == 0 || User.Username.Length == 0)
+            {
                 return HttpStatusCode.BadRequest;
             }
-            try{
+            try
+            {
                 Guid myuuid = Guid.NewGuid();
                 string myuuidAsString = myuuid.ToString();
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(User.Password);
@@ -52,7 +54,9 @@ namespace server.Controllers
                 WebAppDbContext.Users.Add(newUser);
                 await WebAppDbContext.SaveChangesAsync();
                 return HttpStatusCode.Created;
-            }catch{
+            }
+            catch
+            {
                 return HttpStatusCode.InternalServerError;
             }
         }
@@ -61,7 +65,8 @@ namespace server.Controllers
         public async Task<IActionResult> Login(LoginDTO User)
         {
             var foundUser = await WebAppDbContext.Users.FirstOrDefaultAsync(e => e.Username == User.Username);
-            if (foundUser == null){
+            if (foundUser == null)
+            {
                 return BadRequest("Invalid user request!!!");
             }
             bool match = BCrypt.Net.BCrypt.Verify(User.Password, foundUser.Password);
@@ -89,7 +94,7 @@ namespace server.Controllers
             }
             else
             {
-                return Unauthorized("Wong Password");
+                return Unauthorized("Wrong Password");
             }
         }
     }
